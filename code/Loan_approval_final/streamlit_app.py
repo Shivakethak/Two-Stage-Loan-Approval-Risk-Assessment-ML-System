@@ -1,15 +1,17 @@
 import streamlit as st
 import yaml
+from pathlib import Path
 
 from app.loader import load_models
 from app.utils import build_applicant_from_dict
 from app.predict import two_stage_predict
 
-with open("config.yaml") as f:
+BASE_DIR = Path(__file__).resolve().parent
+
+with open(BASE_DIR / "config.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 st.set_page_config(page_title="Loan Approval", layout="centered")
-
 st.title("Loan Approval - Two stage predictor")
 
 cls, reg = load_models(config)
